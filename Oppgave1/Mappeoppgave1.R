@@ -28,49 +28,19 @@ tempratur_df$Dato <- as.Date(tempratur_df$Dato)
 sapply(tempratur_df, class)
 
 
-
-
 tempratur_df %>% 
   ggplot(aes(x=Dato, y=Globe)) +
-  geom_point() +
-  geom_line()+
+  geom_point(aes(x=Dato, y=Globe), colour='blue') + 
+  geom_line(aes(x=Dato, y=Globe), colour='blue') +
   geom_line(aes(y=tempratur_df$rolltemp), colour = 'red')+
+  geom_hline(yintercept = 0, colour = "black",) +
   labs(title="Globale temperaturer",
        x="År",
        y="Temperatur") +
-  theme_bw() + 
   scale_x_date(date_breaks = '1 year', date_labels = "%Y") +
-  theme(axis.text.x = element_text(angle=90, hjust = 1))
+  scale_y_continuous(breaks = scales::breaks_pretty(n=20), expand = expansion(add=0.1))+
+  theme(axis.text.x = element_text(angle=90, hjust = 1)) 
 
-
-#Lager den så lik som nettsiden som mulig.
-
-tempratur_df %>%
-  ggplot(aes(x=Dato, y=Globe)) + 
-  geom_line(aes(x=Dato, y=Globe), colour='darkblue') +
-  geom_line(aes(x=Dato, y=rolltemp), colour='red', size=1.5) +
-  geom_point(aes(x=Dato, y=Globe), shape = 1, colour='darkblue') + 
-  coord_cartesian(xlim = c(as.Date("1980-06-01"), as.Date("2020-01-01"))) +
-  geom_hline(yintercept = 0, colour = "wheat4", linetype=1, size=1) +
-  theme_bw() +
-  scale_y_continuous(breaks = round(seq(min(tempratur_df$Globe), 1.0, by = 0.1),1)) +
-  scale_x_date(date_breaks="1 year", date_labels="%Y") +
-  labs(title = "Latest Global Temps", 
-       y = "T Departure from '91-'20 Avg. (deg. C)", x = " ") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  annotate("text", x=as.Date("1987-01-01"), y=0.5, 
-           label= "UAH Satellite-Based \n Temperature of the \n Global Lower
-           Atmosphere \n (Version 6.0)") +
-  annotate("text", x=as.Date("2018-01-01"), y=-0.5, 
-           label="December 2021: \n +0.21 deg. C") +
-  annotate("text", x=as.Date("2006-01-01"), y=-0.6, 
-           label="Running, centered \n 13-month average", colour="red") +
-  annotate("segment", x = as.Date("2006-01-01"), 
-           xend = as.Date("2009-01-01"), y = -0.5, 
-           yend = -0.15, colour = "red") +
-  annotate("segment", x = as.Date("2018-01-01"), 
-           xend = as.Date("2021-12-01"), y = -0.4, 
-           yend = 0.21, colour = "black")
 
 ### Oppgave 2
 
