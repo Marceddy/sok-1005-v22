@@ -12,10 +12,10 @@ data2 <- data1 %>%
 data2[is.na(data2)] = "D.C"
 
 # Oppgave 1
-df2 %>%
+data2 %>%
   rename(Stat=name) %>% 
   ggplot(aes(y = deaths_per_100k, x = fully_vaccinated_pct_of_pop,)) + 
-  geom_point() +
+  geom_point(col="aquamarine4") +
   labs(title="Dødsfall som følge av Covid-19 i forhold til vaksinerte og uvaksinerte",
        x="Andel av total befolkning som er vaksinert",
        y="Dødsfall pr 100.000") + 
@@ -28,10 +28,10 @@ df2 %>%
 
 lm(deaths_per_100k ~ fully_vaccinated_pct_of_pop, data = data2)
 
-df2 %>%
+data2 %>%
   rename(Stat=name) %>% 
   ggplot(aes(y = deaths_per_100k, x = fully_vaccinated_pct_of_pop,)) + 
-  geom_point() +
+  geom_point(col="aquamarine4") +
   geom_smooth(method = lm) + 
   labs(title="Dødsfall som følge av Covid-19 i forhold til vaksinerte og uvaksinerte",
        x="Andel av total befolkning som er vaksinert",
