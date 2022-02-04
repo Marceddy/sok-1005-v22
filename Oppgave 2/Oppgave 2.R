@@ -4,15 +4,16 @@ library(jsonlite)
 library(rvest)
 library(Countr)
 
-data1 <- fromJSON("https://static01.nyt.com/newsgraphics/2021/12/20/us-coronavirus-deaths-2021/ff0adde21623e111d8ce103fedecf7ffc7906264/scatter.json")
+data <- fromJSON("https://static01.nyt.com/newsgraphics/2021/12/20/us-coronavirus-deaths-2021/ff0adde21623e111d8ce103fedecf7ffc7906264/scatter.json")
 
-data2 <- data1 %>% 
+data <- data %>% 
   mutate(Abbr = state.abb[match(name,state.name)])
 
-data2[is.na(data2)] = "D.C"
+data[is.na(data)] = "D.C"
 
 # Oppgave 1
-data2 %>%
+
+data %>%
   rename(Stat=name) %>% 
   ggplot(aes(y = deaths_per_100k, x = fully_vaccinated_pct_of_pop,)) + 
   geom_point(col="aquamarine4") +
@@ -25,10 +26,9 @@ data2 %>%
 
 # Oppgave 2
 
-
 lm(deaths_per_100k ~ fully_vaccinated_pct_of_pop, data = data2)
 
-data2 %>%
+data %>%
   rename(Stat=name) %>% 
   ggplot(aes(y = deaths_per_100k, x = fully_vaccinated_pct_of_pop,)) + 
   geom_point(col="aquamarine4") +
