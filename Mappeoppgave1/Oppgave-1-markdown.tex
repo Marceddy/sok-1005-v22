@@ -1,0 +1,373 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Mappeoppgave1},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Mappeoppgave1}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.5     v purrr   0.3.4
+## v tibble  3.1.6     v dplyr   1.0.7
+## v tidyr   1.1.4     v stringr 1.4.0
+## v readr   2.1.1     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(readr)}
+\FunctionTok{library}\NormalTok{(data.table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'data.table'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     between, first, last
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     transpose
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(zoo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\hypertarget{oppgave-1}{%
+\section{Oppgave 1}\label{oppgave-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tempratur\_df }\OtherTok{\textless{}{-}} \FunctionTok{fread}\NormalTok{(}\StringTok{"http://vortex.nsstc.uah.edu/data/msu/v6.0/tlt/uahncdc\_lt\_6.0.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in fread("http://vortex.nsstc.uah.edu/data/msu/v6.0/tlt/
+## uahncdc_lt_6.0.txt"): Stopped early on line 520. Expected 29 fields but found
+## 0. Consider fill=TRUE and comment.char=. First discarded non-empty line: <<Trend
+## 0.14 0.18 0.12 0.16 0.19 0.14 0.11 0.16 0.10 0.12 0.16 0.11 0.18 0.21 0.17 0.10
+## 0.15 0.09 0.25 0.23 0.27 0.01 0.09 -0.02 0.18 0.18 0.18>>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tempratur\_df }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(tempratur\_df, }\AttributeTok{select =} \SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Land}\SpecialCharTok{:}\NormalTok{AUST)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Year }\SpecialCharTok{!=}\FunctionTok{max}\NormalTok{(Year),Year }\SpecialCharTok{!=} \FunctionTok{min}\NormalTok{(Year))}
+
+\FunctionTok{sapply}\NormalTok{(tempratur\_df, class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Year          Mo       Globe 
+## "character" "character" "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tempratur\_df}\SpecialCharTok{$}\NormalTok{Globe }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(tempratur\_df}\SpecialCharTok{$}\NormalTok{Globe)}
+\NormalTok{tempratur\_df}\SpecialCharTok{$}\NormalTok{Mo }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(tempratur\_df}\SpecialCharTok{$}\NormalTok{Mo)}
+
+\FunctionTok{sapply}\NormalTok{(tempratur\_df, class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Year          Mo       Globe 
+## "character"   "numeric"   "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tempratur\_df }\OtherTok{=}\NormalTok{ tempratur\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{rolltemp =} \FunctionTok{rollmean}\NormalTok{(Globe, }\DecValTok{13}\NormalTok{,  }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{align =}\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+         \AttributeTok{Dato =} \FunctionTok{as.yearmon}\NormalTok{(}\FunctionTok{paste}\NormalTok{(tempratur\_df}\SpecialCharTok{$}\NormalTok{Year, tempratur\_df}\SpecialCharTok{$}\NormalTok{Mo), }\StringTok{"\%Y \%m"}\NormalTok{))}
+
+\NormalTok{tempratur\_df}\SpecialCharTok{$}\NormalTok{Dato }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(tempratur\_df}\SpecialCharTok{$}\NormalTok{Dato)}
+\FunctionTok{sapply}\NormalTok{(tempratur\_df, class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Year          Mo       Globe    rolltemp        Dato 
+## "character"   "numeric"   "numeric"   "numeric"      "Date"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tempratur\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dato, }\AttributeTok{y=}\NormalTok{Globe)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dato, }\AttributeTok{y=}\NormalTok{Globe), }\AttributeTok{colour=}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Dato, }\AttributeTok{y=}\NormalTok{Globe), }\AttributeTok{colour=}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{tempratur\_df}\SpecialCharTok{$}\NormalTok{rolltemp), }\AttributeTok{colour =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{,) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"Globale temperaturer"}\NormalTok{,}
+       \AttributeTok{x=}\StringTok{"År"}\NormalTok{,}
+       \AttributeTok{y=}\StringTok{"Temperatur"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_date}\NormalTok{(}\AttributeTok{date\_breaks =} \StringTok{\textquotesingle{}1 year\textquotesingle{}}\NormalTok{, }\AttributeTok{date\_labels =} \StringTok{"\%Y"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{breaks\_pretty}\NormalTok{(}\AttributeTok{n=}\DecValTok{20}\NormalTok{), }\AttributeTok{expand =} \FunctionTok{expansion}\NormalTok{(}\AttributeTok{add=}\FloatTok{0.1}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle=}\DecValTok{90}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 12 row(s) containing missing values (geom_path).
+\end{verbatim}
+
+\includegraphics{Oppgave-1-markdown_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\hypertarget{oppgave-2}{%
+\section{Oppgave 2}\label{oppgave-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Lower\_Troposphere }\OtherTok{\textless{}{-}} \FunctionTok{fread}\NormalTok{(}\StringTok{"http://vortex.nsstc.uah.edu/data/msu/v6.0/tlt/uahncdc\_lt\_6.0.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in fread("http://vortex.nsstc.uah.edu/data/msu/v6.0/tlt/
+## uahncdc_lt_6.0.txt"): Stopped early on line 520. Expected 29 fields but found
+## 0. Consider fill=TRUE and comment.char=. First discarded non-empty line: <<Trend
+## 0.14 0.18 0.12 0.16 0.19 0.14 0.11 0.16 0.10 0.12 0.16 0.11 0.18 0.21 0.17 0.10
+## 0.15 0.09 0.25 0.23 0.27 0.01 0.09 -0.02 0.18 0.18 0.18>>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mid\_Troposphere }\OtherTok{\textless{}{-}} \FunctionTok{fread}\NormalTok{(}\StringTok{"https://www.nsstc.uah.edu/data/msu/v6.0/tmt/uahncdc\_mt\_6.0.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in fread("https://www.nsstc.uah.edu/data/msu/v6.0/tmt/
+## uahncdc_mt_6.0.txt"): Stopped early on line 520. Expected 29 fields but found
+## 0. Consider fill=TRUE and comment.char=. First discarded non-empty line: <<Trend
+## 0.10 0.13 0.08 0.12 0.14 0.10 0.07 0.10 0.07 0.09 0.12 0.09 0.13 0.15 0.12 0.06
+## 0.09 0.06 0.17 0.16 0.19 -0.02 0.01 -0.03 0.14 0.14 0.13>>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Tropopause }\OtherTok{\textless{}{-}} \FunctionTok{fread}\NormalTok{(}\StringTok{"https://www.nsstc.uah.edu/data/msu/v6.0/ttp/uahncdc\_tp\_6.0.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in fread("https://www.nsstc.uah.edu/data/msu/v6.0/ttp/
+## uahncdc_tp_6.0.txt"): Stopped early on line 520. Expected 29 fields but found
+## 0. Consider fill=TRUE and comment.char=. First discarded non-empty line: <<Trend
+## 0.02 0.02 0.02 0.03 0.04 0.03 0.01 -0.00 0.01 0.03 0.04 0.03 0.03 0.04 0.03
+## -0.01 -0.03 -0.00 0.02 0.02 0.03 -0.08 -0.13 -0.05 0.05 0.05 0.04>>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Lower\_Stratosphere }\OtherTok{\textless{}{-}} \FunctionTok{fread}\NormalTok{(}\StringTok{"https://www.nsstc.uah.edu/data/msu/v6.0/tls/uahncdc\_ls\_6.0.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in fread("https://www.nsstc.uah.edu/data/msu/v6.0/tls/
+## uahncdc_ls_6.0.txt"): Stopped early on line 505. Expected 29 fields but found
+## 28. Consider fill=TRUE and comment.char=. First discarded non-empty line: <<2020
+## 11 -0.23 -0.96 0.05 0.05 -0.40 0.34 -0.52 -2.24 -0.16 1.29 1.26 1.31 -0.53 -0.78
+## -0.30 -1.55 -5.03 -0.94 -1.85 -2.08 -1.58 -8.78-13.45 -6.57 -0.32 -1.04 0.53>>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Lower\_Troposphere }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(Lower\_Troposphere, }\AttributeTok{select =}\FunctionTok{c}\NormalTok{(Year,Mo,NoPol)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Year }\SpecialCharTok{!=} \FunctionTok{max}\NormalTok{(Year), Year }\SpecialCharTok{!=} \FunctionTok{min}\NormalTok{(Year))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Atmosphere =} \StringTok{"Lower\_Troposphere"}\NormalTok{)}
+
+\NormalTok{Mid\_Troposphere }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(Mid\_Troposphere, }\AttributeTok{select =}\FunctionTok{c}\NormalTok{(Year,Mo,NoPol)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Year }\SpecialCharTok{!=} \FunctionTok{max}\NormalTok{(Year), Year }\SpecialCharTok{!=} \FunctionTok{min}\NormalTok{(Year)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Atmosphere =} \StringTok{"Mid\_Troposhere"}\NormalTok{)}
+
+\NormalTok{Tropopause }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(Tropopause, }\AttributeTok{select =}\FunctionTok{c}\NormalTok{(Year,Mo,NoPol)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Year }\SpecialCharTok{!=} \FunctionTok{max}\NormalTok{(Year), Year }\SpecialCharTok{!=} \FunctionTok{min}\NormalTok{(Year)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Atmosphere =} \StringTok{"Tropopause"}\NormalTok{)}
+
+\NormalTok{Lower\_Stratosphere }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(Lower\_Stratosphere, }\AttributeTok{select =}\FunctionTok{c}\NormalTok{(Year,Mo,NoPol)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Atmosphere =} \StringTok{"Lower\_Stratosphere"}\NormalTok{)}
+
+\NormalTok{Lower\_Stratosphere }\OtherTok{\textless{}{-}}\NormalTok{ Lower\_Stratosphere }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate\_all}\NormalTok{(as.character)}
+
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(Lower\_Troposphere, Mid\_Troposphere,}
+\NormalTok{                    Tropopause, Lower\_Stratosphere)}
+
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{NoPol }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{NoPol)}
+
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tempmean =} \FunctionTok{rollmean}\NormalTok{(NoPol, }\AttributeTok{k=}\DecValTok{13}\NormalTok{, }\AttributeTok{fill=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{align =}\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+         \AttributeTok{Dato =} \FunctionTok{as.yearmon}\NormalTok{(}\FunctionTok{paste}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Year, df}\SpecialCharTok{$}\NormalTok{Mo), }\StringTok{"\%Y \%m"}\NormalTok{)) }
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Dato }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Dato)}
+
+\FunctionTok{ggplot}\NormalTok{(df,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Dato, }\AttributeTok{y =}\NormalTok{ NoPol, }\AttributeTok{color =}\NormalTok{ Atmosphere)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_path}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{tempmean, }\AttributeTok{colour=}\StringTok{\textquotesingle{}Snitt temp\textquotesingle{}}\NormalTok{), }\AttributeTok{size=}\FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{90}\NormalTok{, }\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{hjust=}\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"År"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Tempraturer"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Varierende tempraturer fra 60 grader til 90 grader Nord"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{13}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{6}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{11}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_date}\NormalTok{(}\AttributeTok{date\_breaks =} \StringTok{\textquotesingle{}1 year\textquotesingle{}}\NormalTok{, }\AttributeTok{date\_labels =} \StringTok{"\%Y"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks=}\NormalTok{scales}\SpecialCharTok{::}\FunctionTok{breaks\_pretty}\NormalTok{(}\AttributeTok{n=}\DecValTok{20}\NormalTok{),}
+                     \AttributeTok{expand =} \FunctionTok{expansion}\NormalTok{(}\AttributeTok{add =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oppgave-1-markdown_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\end{document}
