@@ -27,9 +27,12 @@ tall <- "https://www.motor.no/aktuelt/motors-store-vintertest-av-rekkevidde-pa-e
 
 ggplotly(tall) 
 
-
-
+# Ved å øke "STOPP" med 1 vil vi forvente at WLTP med 0.86
 
 lm(STOPP ~ WLTP, data = tall$data) 
 
 ggplotly(tall + geom_smooth(method = lm))
+
+
+# Ut fra grafen kan vi se at en får lavere inn og ut forhold
+# Intercept forteller oss den de har grunnlag for å selge bilene med den rekkevidden som er oppført. 

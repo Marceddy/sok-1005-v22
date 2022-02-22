@@ -1,4 +1,4 @@
-setwd("~/Desktop/sok-1005-v22/Oppgave 2")
+setwd("~/Desktop/sok-1005-v22/Mappeoppgave 2")
 library(tidyverse)
 library(jsonlite)
 library(rvest)
