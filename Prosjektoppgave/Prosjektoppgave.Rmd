@@ -1,0 +1,289 @@
+---
+title: "Prosjektoppgave"
+author: "Marcus Edvardsen og Yves Sebazungu"
+date: '2022-06-07'
+output: pdf_document
+---
+```{r}
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(plotly)
+library(lubridate)
+library(data.table)
+library(ggplot2)
+library(tibble)
+```
+
+```{r setup, include=FALSE,warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Oppgave 1
+
+```{r Oppgave 1}
+appwich<- read.csv("AppWichStoreAttributes.csv")
+countycrime <- read.csv("county_crime.csv")
+demographic<- read.csv("county_demographic.csv")
+weeklysales <- read.csv("WEEKLY_SALES_10STORES.csv")
+weeklyweather<- read.csv("WEEKLY_WEATHER.csv")
+countyemployment <- read.csv("county_employment.csv")
+
+appwich = appwich %>% 
+  rename(Store_num =Store_Num,
+         Weather_Station = Store_Weather_Station) 
+
+
+weeklyweather <- weeklyweather %>% 
+  mutate(Weather_Date=dmy(Weather_Date)) %>% 
+  rename(Week = Weather_Week,
+         Date = Weather_Date) %>% 
+  mutate(Week =strftime(.$Date, format = "%U")) %>% 
+  replace(is.na(.), 0)
+
+weeklysales <- weeklysales %>% 
+  mutate(Date=mdy(Date))
+```
+Merger tabellene
+Bruker merge på df2 
+
+
+```{r Oppgave 1.2}
+df1 <- inner_join(countycrime, demographic, countyemployment, by = 'County_Name') %>% 
+  replace(is.na(.), 0)
+df2 <- merge(appwich, weeklysales, by = 'Store_num') %>% 
+  rename(County_Name = Store_County) %>% 
+  left_join(weeklyweather)
+
+data_clean <- left_join(df2,df1)
+```
+
+
+
+
+## Oppgave 2
+Til oppgave 2 har vi valgt å foreta en videre analyse av Lake city Stripmall som er et kjøpesenter lokalisert i byen Lake City. Grunnen til at vi valgte denne butikken er at vi ser et vidt spekter av faktorer som påvirker senteret. (Eksempler på dette er Drive Through, flerkulturelt samfunn, prisklasser) 
+
+Her starter vi med å filtrere for uken vi har valgt å ta for oss:
+
+```{r Oppgave 2.1}
+lake_city_week <- data_clean %>%
+  filter(Store_num == "16") %>% 
+  filter(Month == "12") %>% 
+  filter(Date >="2012-12-02", Date <="2012-12-09")
+```
+Noe av det første vi gjør er å lage en funksjon som deler inn priser tilhørende hver prisklasse, dette gjøres for at vi da ikke trenger å være like nøye med selve desimaltallene, men heller holde fokus på hvordan hver prisklasse gjør det hver for seg, i løpet av uken vil vi holde fokus på profitt i forhold til prisklassen. Grunnen til at vi har valgt å gjøre det på denne måten er at da kan vi tidlig få en pekepinn på hvilke prisklasser og produkter sentret burde fokusere mer på kontra prisklasser som gir dårligere resultat. 
+```{r Oppgave 2.2}
+sg <- function(data_clean){
+  return(x <- (data_clean) %>% 
+           group_by(price_group = ifelse(Price <= 0.49, "$0", 
+                                         ifelse(Price <= 1.49, "$1", 
+                                                ifelse(Price > 1.49 & Price <= 2.49, "$2", 
+                                                       ifelse(Price > 2.49 & Price <= 3.49, "$3", 
+                                                              ifelse(Price > 3.49 & Price <= 4.49, "$4", 
+                                                                     ifelse(Price > 4.49 & Price <= 5.49, "$5", 
+                                                                            ifelse(Price > 5.49 & Price <= 6.49, "$6", 
+                                                                                   ifelse(Price > 6.49 & Price <= 7.49, "$7",
+                                                                                          ifelse(Price > 7.49 & Price <= 8.49, "$8",
+                                                                                                 ifelse(Price > 8.49 & Price <= 9.49, "$9", "over_$10"))))))))))) %>% 
+           summarise(Sold, Price, Sales, Profit, Margin, Store_Name) %>%
+           arrange(.$price_group))
+}
+
+lake_city <- sg(lake_city_week)
+```
+Grafen under er en graf som tar for seg de forskjellige prisklassene og sammenligner opp mot total solgte varer, allerede her får vi en indikasjon på hvordan konsernledelsen satser, men vi må huske på at kostnader ikke er med i betraktning. Dette betyr at selv om prisklassen 5 dollar er den som selger mest er det ikke dermed gitt at denne klassen gir best profitt.
+
+```{r Oppgave 2.3}
+lake_city %>% 
+  ggplot(aes(x = price_group, y=Sales , a=Sold, b=Price, c=Profit, d=Margin  ))+
+  geom_bar(stat= "identity", fill = "steelblue")  +
+  labs(title = "Ukentlig salg - Lake City Stripmall",
+       x="Prisklasse", y = "Ukentlig salg") +
+  theme_bw()
+```
+
+Hva er de mest lønnsome produktene?
+```{r Oppgave 2.4}
+lake_city_week %>% 
+  group_by(Description) %>%
+  summarise(Profit = sum(Profit)) %>%
+  arrange(desc(Profit))
+```
+
+Hva er de minst lønnsome produktene?
+```{r Oppgave 2.5}
+lake_city_week %>% 
+  group_by(Description) %>%
+  summarise(Profit = sum(Profit)) %>%
+  arrange(Profit)
+```
+
+Hva selger vi mest av?
+```{r Oppgave 2.6}
+lake_city_week %>% 
+  group_by(Description) %>%
+  summarise(Sold = sum(Sold)) %>%
+  arrange(desc(Sold))
+```
+
+Graf over mest solgte produkter:
+```{r Oppgave 2.7}
+lake_city_week %>% 
+  filter(Sold >= 50) %>% 
+  ggplot(aes(x = reorder(Description,-Sold), y = Sold, colour = Date )) +
+  geom_bar(stat = "identity") + 
+  geom_text(aes(label = Sold),position = position_stack(vjust = 0.4), colour = "White", size=3)+
+  labs(title = "Mest solgte varer for uken 02-09,2012") +
+  xlab("Produkt") +
+  ylab("Enheter") + 
+  theme_bw() +
+  theme(axis.text.x = element_text(vjust= 0.6, size = 4, angle = 10))
+
+```
+
+Av grafen over kommer det tydelig frem at varene som er solgt mest av er potetgull og drikke varer. Dette er det de selger mest av og en justering av pris her vil derfor påvirke budsjette deres stort. Man kan eventuelt da sammenligne prisene hos andre butikker for potetgull og drikke, og eventulet satse på om de vil undergå de andre butikk kjedene.
+
+
+## Oppgave 3
+
+En månedlig rapport vil konsernledelsen kunne se det totale bildet av virksomhetene og derfor kunne foreta strategiske vurderinger basert på resultatene. Dette indikerer også at salg og fortjeneste totalt og per butikk vil være sentrale faktorer for konsersledelsen. 
+Sammenligning av data på varer tvers av butikker vil også være relevant. 
+
+
+Starter med å filtrere både for Lake city stripmall og for alle utsalgsstedene for valgte måned.
+
+```{r Oppgave 3.1}
+lake_city_mnd <- data_clean %>%
+  filter(Store_num == "16") %>% 
+  filter(Month == "12") %>% 
+  filter(Year == "2012")
+
+mnd_data <- data_clean %>% 
+  filter(Year == "2012", Month == "12") 
+```
+
+Utsalgsstedene og deres profitt for desember 2012
+
+```{r Oppgave 3.2}
+mnd_data %>%  
+  group_by(Store_num) %>%
+  summarise(Profit = sum(Profit)) %>%
+  arrange(desc(Profit)) 
+```
+
+```{r Oppgave 3.3}
+mnd_data %>% 
+  group_by(Month, Store_Name) %>% 
+  summarise(Mnd_profitt = sum(Profit)) %>%
+  ggplot(aes(x = reorder(Store_Name,-Mnd_profitt), y = Mnd_profitt, col= Store_Name)) +
+  geom_col(aes(fill= "red"),show.legend = FALSE) + 
+  geom_text(aes(label = Mnd_profitt),position = position_stack(vjust = 0.4), colour = "White", size=3)+
+  labs(title = "Profitt for alle utsalgsstedene desember 2012",
+       subtitle = "I USD") +
+  xlab("Profitt") +
+  ylab("Måned") + 
+  theme_bw() +
+  theme(axis.text.x = element_text(vjust= 0.6, size = 5, angle = 10))
+```
+Av grafen ser vi at lake City stripmall verken gjør det gjennomsnittlig i forhold til de andre kjedene. Om tilfellet er slik at konsernledelsen nå skulle ønsket å åpne enda en restaurant ville vi heller bedt han om å bytte lokasjon og heller etterligne powercity freestand. Dette da måneds proffitten er 20 000 $ mer.
+
+
+Hvilke produkter er mest lønnsom?
+```{r Oppgave 3.4}
+lake_city_mnd %>% 
+  group_by(Description) %>%
+  summarise(Profit = sum(Profit)) %>%
+  arrange(desc(Profit))
+```
+
+Hvilke produkter er minst lønnsome?
+
+```{r Oppgave 3.5}
+lake_city_mnd %>% 
+  group_by(Description) %>%
+  summarise(Profit = sum(Profit)) %>%
+  arrange(Profit)
+```
+
+Hva selger vi mest av?
+
+```{r Oppgave 3.6}
+lake_city_mnd %>%  
+  group_by(Description) %>%
+  summarise(Sold = sum(Sold)) %>%
+  arrange(desc(Sold))
+```
+
+Graf over mest solgte produkter denne måneden:
+
+```{r Oppgave 3.7}
+lake_city_mnd %>% 
+  filter(Sold >= 50) %>% 
+  ggplot(aes(x = reorder(Description,-Sold), y = Sold, colour = Date )) +
+  geom_bar(stat = "identity", fill="beige") + 
+  geom_text(aes(label = Sold),position = position_stack(vjust = 0.4), colour = "Black", size=3)+
+  labs(title = "Mest solgte varer for uken 02-09,2012") +
+  xlab("Produkt") +
+  ylab("Enheter") + 
+  theme_bw() +
+  theme(axis.text.x = element_text(vjust= 0.6, size = 4, angle = 10))
+```
+Her kan vi igjen se at det er "Chips" som dominerer salget ut måneden.
+
+Graf for profitt gjennom måneden:
+
+```{r Oppgave 3.8}
+plotmnd <- lake_city_mnd 
+
+plotmnd <- aggregate(plotmnd$Profit, by=list(Dato=plotmnd$Date), FUN=sum)
+plotmnd  <- rename(plotmnd, Profitt = x) 
+
+plotmnd %>% 
+  ggplot(aes(x = Dato, y = Profitt)) +
+  geom_line() + 
+  labs(title = "Profitt for desember måned 2020",
+       subtitle= "I USD") +
+  theme_bw()
+
+```
+  
+
+## Oppgave 4
+
+```{r Oppgave 4.1}
+data_clean %>%
+  select(Store_Name, County_Name, Profit) %>% 
+  group_by(Store_Name, County_Name) %>% 
+  summarise(Profit =sum(Profit)) %>% 
+  ggplot(aes(x=reorder(Store_Name,-Profit) , y =Profit))+
+  geom_col(aes(fill = County_Name))+
+  scale_y_continuous(labels = scales::comma)+
+  labs(title = "Har konkurransen en effekt på lønnsomheten?",
+       subtitle = 'Farger etter hvilket county de ligger i.', 
+       fill = 'fastfood marked' )+
+  ylab("Profitt i USD")+
+  xlab("Utsalgssted")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=15, vjust = 0.4))
+
+```
+
+```{r Oppgave 4.2}
+data_clean %>% 
+  select(Store_Name, Profit, Store_Drive_Through) %>% 
+  group_by(Store_Name, Store_Drive_Through) %>% 
+  summarise(Profit =sum(Profit)) %>% 
+  ggplot(aes(x=reorder(Store_Name,-Profit) , y =Profit))+
+  geom_col(aes(fill= Store_Drive_Through )) +
+  labs(title = "Har drive-trough noe å si på lønnsomheten?",
+       subtitle = "Burde det nye utsalgsstedet ha drive-trough?", 
+       fill = 'Drive Through?' )+
+  ylab("Profitt i USD")+
+  xlab("Utsalgssted")+
+  scale_y_continuous(labels = scales::comma)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=15, vjust = 0.4))
+```
+
+Av dataanalysen gjort i denne oppgaven indikerer at det vil være bedre å etablere butikker utenfor et kjøpesenter enn inne, dette fordi at av grafen ser man at konkurransen påvirker salget i noe grad negativt. Om man tillegg klarer å opprettholde en Drive-In løsning, så ser det ut til å gi best resultat. 
